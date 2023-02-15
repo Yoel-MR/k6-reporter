@@ -7,7 +7,7 @@
 import ejs from '../node_modules/ejs/ejs.min.js'
 import template from './template.ejs'
 
-const version = '2.3.0'
+const version = '2.3.0-mr0'
 
 //
 // Main function should be imported and wrapped with the function handleSummary
@@ -65,13 +65,9 @@ export function htmlReport(data, opts = {}) {
 
   const standardMetrics = [
     'grpc_req_duration',
+    'http_req',
+    'http_req_failed',
     'http_req_duration',
-    'http_req_waiting',
-    'http_req_connecting',
-    'http_req_tls_handshaking',
-    'http_req_sending',
-    'http_req_receiving',
-    'http_req_blocked',
     'iteration_duration',
     'group_duration',
     'ws_connecting',
