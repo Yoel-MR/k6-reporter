@@ -32,12 +32,23 @@ export function htmlReport(data, opts = {}) {
   // Count the thresholds and those that have failed
   let thresholdFailures = 0
   let thresholdCount = 0
+  let thresholdMetrics = []
+
+  let setThresholdObject = (metricName, thresholdName, ok) => {
+    return {
+      metricName,
+      thresholdName,
+      ok
+    }
+  }
+
   for (let metricName in data.metrics) {
     metricListSorted.push(metricName)
     if (data.metrics[metricName].thresholds) {
       thresholdCount++
       let thresholds = data.metrics[metricName].thresholds
       for (let thresName in thresholds) {
+        thresholdMetrics.push(setThresholdObject(metricName, thresName, thresholds[thresName].ok))
         if (!thresholds[thresName].ok) {
           thresholdFailures++
         }
@@ -100,6 +111,7 @@ export function htmlReport(data, opts = {}) {
     otherMetrics,
     thresholdFailures,
     thresholdCount,
+    thresholdMetrics,
     checkFailures,
     checkPasses,
     version,

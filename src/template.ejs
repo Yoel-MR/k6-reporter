@@ -6,7 +6,7 @@
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" crossorigin="anonymous">
 
-    <link rel="shortcut icon" href="https://raw.githubusercontent.com/benc-uk/k6-reporter/main/assets/icon.png" type="image/png">
+    <link rel="shortcut icon" href="https://medirecords.com/wp-content/uploads/2020/02/logo.svg" type="image/png">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MR Performance Test: <%= title %></title>
@@ -169,6 +169,39 @@
       <input type="radio" name="tabs" id="tabone" checked="checked">
       <label for="tabone"><i class="far fa-clock"></i> &nbsp; Request Metrics</label>
       <div class="tab">
+        <h2>Performance Thresholds</h2>
+        <table class="pure-table pure-table-striped">
+          <tbody>
+            <thead>
+              <tr>
+                <th>Thresholds</th>
+                <th>Criteria</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            
+            <% function bgColorThreshold(ok) {
+                if(ok) return 'good'
+                return 'failed'
+              }
+
+              function showThresholdResult(ok) {
+                if(ok) return 'Passed'
+                return 'Failed'
+              }
+
+              for(metrics of thresholdMetrics) { 
+                var metric = metrics
+            %>
+              <tr>
+                <td class="<%= bgColorThreshold(metric.ok) %>"><b><%= metric.metricName %></b></td>
+                <td class="<%= bgColorThreshold(metric.ok) %>"><%= metric.thresholdName %></td>
+                <td class="<%= bgColorThreshold(metric.ok) %>"><%= showThresholdResult(metric.ok) %></td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+        <h2>Standard Performance Metrics</h2>
         <table class="pure-table pure-table-striped">
           <tbody>
             <thead>
