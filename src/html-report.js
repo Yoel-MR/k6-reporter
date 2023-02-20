@@ -66,13 +66,17 @@ export function htmlReport(data, opts = {}) {
     checkPasses += passes
   }
 
-  for (let group of data.root_group.groups) {
-    if (group.checks) {
-      let { passes, fails } = countChecks(group.checks)
-      checkFailures += fails
-      checkPasses += passes
+  const groupChecks = (groups) => {
+    for (let group of groups) {
+      if (group.checks) {
+        let { passes, fails } = countChecks(group.checks)
+        checkFailures += fails
+        checkPasses += passes
+      }
+      groupChecks(group.groups)
     }
   }
+  groupChecks(data.root_group.groups)
 
   const standardMetrics = [
     'grpc_req_duration',
